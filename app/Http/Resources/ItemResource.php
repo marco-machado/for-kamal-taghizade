@@ -18,6 +18,7 @@ class ItemResource extends JsonResource
             'name' => $this->name,
             'description' => $this->description,
             'type' => $this->type,
+            'temporary_url' => $this->whenNotNull($this->temporary_url),
         ];
     }
 }
