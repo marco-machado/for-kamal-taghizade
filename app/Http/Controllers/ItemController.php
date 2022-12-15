@@ -7,6 +7,8 @@ use App\Http\Resources\ItemResource;
 use App\Models\Item;
 use Illuminate\Http\Response;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\URL;
+use Symfony\Component\HttpFoundation\BinaryFileResponse;
 
 class ItemController extends Controller
 {
@@ -17,7 +19,7 @@ class ItemController extends Controller
      */
     public function index()
     {
-        //
+        return Item::paginate(10);
     }
 
     /**
@@ -47,6 +49,20 @@ class ItemController extends Controller
      */
     public function show(Item $item)
     {
-        //
+        $temporaryUrl = URL::temporarySignedRoute('items.file', now()->addMinutes(10), ['item' => $item]);
+
+        $resource = new ItemResource($item);
+        $resource->temporary_url = $temporaryUrl;
+
+        return response($resource);
+    }
+
+    /**
+     * @param Item $item
+     * @return BinaryFileResponse
+     */
+    public function getFile(Item $item)
+    {
+        return response()->download($item->file);
     }
 }

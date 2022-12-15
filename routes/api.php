@@ -21,3 +21,5 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::apiResource('items', ItemController::class)
     ->except(['update', 'destroy']);
+
+Route::get('items/{item}/file', [ItemController::class, 'getFile'])->name('items.file');
