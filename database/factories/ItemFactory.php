@@ -19,7 +19,7 @@ class ItemFactory extends Factory
         return [
             'name' => $this->faker->name(),
             'description' => $this->faker->name(),
-            'file' => $this->faker->file('/tmp', 'storage/app/files'),
+            'file' => storage_path('app') . '/files/' . $this->faker->file('/tmp', 'storage/app/files', false),
             'type' => $this->faker->numberBetween(1, 3),
         ];
     }
