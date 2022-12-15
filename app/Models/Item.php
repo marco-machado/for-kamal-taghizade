@@ -21,4 +21,9 @@ class Item extends Model
         'created_at',
         'updated_at',
     ];
+
+    public function scopeOldRecords($query)
+    {
+        return $query->where('created_at', '<', now()->subDays(30));
+    }
 }
